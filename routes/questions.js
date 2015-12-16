@@ -6,21 +6,30 @@ var Molecule = require('../models/molecule.js');
 
 router.get('/show/:id', function (req, res, next) {
   Question.findById(req.params.id).exec(function (err, qs) {
+    if (err) throw err;
     res.render('Question/show', {
       question: qs
-    })
-  })
-})
+    });
+  });
+});
 
 router.get('/new', function (req, res, next) {
   res.render('Question/new');
-})
+});
 
 router.post('/new', function (req, res, next) {
-
-  q = new Question({
-
-  })
-})
+  var q = new Question({
+    questionText: req.body.QuestionText,
+    molecule: req.body.QuestionMolecule,
+    molecule_jme: req.body.QuestionMolecule_jme,
+    answerMolecule: req.body.AnswerMolecule,
+    answerMolecule_jme: req.body.answerMolecule_jme
+  });
+  
+  q.save(function (err) {
+    if (err) throw err;
+    res.redirect(301, '../questions/show/' + q._id);
+  });
+});
 
 module.exports = router;
