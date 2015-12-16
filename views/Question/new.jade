@@ -1,6 +1,30 @@
 extends ../layout 
 
 block content
-  .row.small-12.columns
-    h2 New Question
+  .row.small-12.columns(align='center')
+    h2 New Question!
   
+  .row
+    div(class="large-4 columns") 
+      form(id="newQuestionForm", method="post", action="questions/new")
+        .row
+          label Question Text 
+          textarea(rows=4, id='QuestionText', name='QuestionText')
+            
+        .row 
+          label Question Molecule 
+          input(type='text', id='QuestionMolecule', name='QuestionMolecule')
+          .row(align='right')
+            button(class='button success', id='QMolButton', value='Take from drawing') 
+      
+        .row 
+          label Answer Molecule
+          input(type='text', id='AnswerMolecule', name='AnswerMolecule')
+          .row(align='right')
+            button(class='button success' id='AMolButton', value='Take from drawing') 
+           
+          input(type='submit', class='button default', value='Create Question') 
+          
+    div(class='large-8 columns', align='center')
+      div.row
+        include ../JSME/new_question_editor.html
