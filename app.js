@@ -14,6 +14,7 @@ mongoose.connect(mongoose_url, function () {
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var questions = require('./routes/questions');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/questions', questions);
 
 
 

@@ -8,6 +8,6 @@ router.get('/show/:id', function (req, res, next) {
   })
 });
 
-router.post('/new')
+router.post('/new') 
 
 router.post('/new')

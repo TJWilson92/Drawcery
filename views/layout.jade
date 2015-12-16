@@ -3,5 +3,15 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/foundation.css')
+    
+    
+    .title-bar(data-responsive-toggle="main-menu" data-hide-for="medium")
+      div(class="title-bar-title" ) 
+        h3 Drawcery      
+      .top-bar-right
+        ul(class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown")
+          li
+            a(href='#') New Question
   body
     block content
