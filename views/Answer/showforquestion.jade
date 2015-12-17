@@ -1,0 +1,12 @@
+extends ../layout
+  
+block content 
+  
+  .row.large-12.columns
+    h3 Question: 
+    h2 #{question.questionText}
+    hr
+    include ../JSME/answersforquestion.html
+    .row 
+    each answer in answers
+          h3 #{answer}

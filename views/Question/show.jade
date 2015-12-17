@@ -3,16 +3,14 @@ extends ../layout
 block content 
   .row
     .medium-6.columns  
-      h1 Question
-      h3 #{question.questionText}
-      h5
-        input(type='hidden',id='QuestionMolecule_jme', value="#{question.molecule_jme}")
-      hr 
       h1 Your Answer 
       h4 Once you have drawn your molecule in the editor on the right, and provided an explanation in the textbox below, hit 'submit'
       .row(align='center')
         a(class='button secondary', id='resetMoleculeButton') Reset molecule
+      
       form(id="newAnswerForm", method="post", action="/answers/new")
+        input(type='hidden', name='QuestionId', value='#{question._id}')
+        input(type='hidden', name='EditHistory', value="", id="EditHistory")
         textarea(rows=5, name='AnswerText', placeholder='Your answer to the question', required)
         input(type='text', name='AnswerMolecule_smiles', placeholder='Use button to take structure from editor', id='AnswerMolecule_smiles_input')
         .row(align='right')
@@ -21,9 +19,11 @@ block content
         input(type='hidden', name='AnswerMolecule_jme', id='AnswerMolecule_jme_input')
         input(type="submit", class="button success", value='Submit', id='newAnswerSubmitButton', style='display:none;')
     .medium-6.columns
+      h1 Question
+      h3 #{question.questionText}
+      h5
+        input(type='hidden',id='QuestionMolecule_jme', value="#{question.molecule_jme}")
+      hr 
       h2 Molecule editor
-      
-          
-      
-      
       include ../JSME/question_show_jsme.html
+      

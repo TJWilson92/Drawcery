@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var MoleculeSchema = mongoose.Schema({
   structure: String,
+  structure_jme: String,
   editHistory: Array
 });
 

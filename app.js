@@ -10,11 +10,12 @@ var mongoose_url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_
 
 mongoose.connect(mongoose_url, function () {
   console.log('connected to mongoose');
-})
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var questions = require('./routes/questions');
+var answers = require('./routes/answers');
 
 var app = express();
 
@@ -33,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/questions', questions);
-
+app.use('/answers', answers);
 
 
 
