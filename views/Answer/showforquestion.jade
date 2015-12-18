@@ -1,12 +1,29 @@
 extends ../layout
   
 block content 
-  
+  p #{uniqueValues}
+  //- Place (but hide) molecular structures for JSME
+  #problem-molecule(style='display:none;')
+    | #{question.molecule_jme}
+  #answer-molecule(style='display:none;')
+    | #{question.answerMolecule_jme}
   .row.large-12.columns
     h3 Question: 
     h2 #{question.questionText}
     hr
     include ../JSME/answersforquestion.html
-    .row 
-    each answer in answers
-          h3 #{answer}
+  hr
+  //- TODO: in each of these rows for the unique structures given in response, have a small jsme_applett which displays it (will require getting jme file format, and some kind of javascript for loop)
+  .row.large-12.columns
+    if uniqueValues.length == 0
+      h2 There are no answers to this question yet
+    else
+      
+      each structure in uniqueValues
+        .row.large-12.columns
+          h3 Structure: #{structure.val}
+          h4 Count: #{structure.count}
+          each ans in structure.ids
+            a(href='/answers/show/#{ans}') Answer 
+            br
+          hr

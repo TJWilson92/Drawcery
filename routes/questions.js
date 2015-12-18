@@ -23,9 +23,9 @@ router.post('/new', function (req, res, next) {
     molecule: req.body.QuestionMolecule,
     molecule_jme: req.body.QuestionMolecule_jme,
     answerMolecule: req.body.AnswerMolecule,
-    answerMolecule_jme: req.body.answerMolecule_jme
+    answerMolecule_jme: req.body.AnswerMolecule_jme
   });
-  
+
   q.save(function (err) {
     if (err) throw err;
     res.redirect(301, '../questions/show/' + q._id);
