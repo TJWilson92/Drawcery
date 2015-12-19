@@ -136,4 +136,17 @@ router.get('/forquestion/:question_id', function (req, res, next) {
   });
 });
 
+router.get('/show/:id', function (req, res, next) {
+  Answer.findById(req.params.id).exec(function (err, ans) {
+    if (err) throw err;
+    var answer_string = JSON.stringify(ans);
+    var editHistory_string = JSON.stringify(ans.molecule.editHistory);
+    res.render('Answer/show', {
+      answer: ans,
+      answer_string: answer_string,
+      editHistory_string: editHistory_string
+    });
+  });
+});
+
 module.exports = router;

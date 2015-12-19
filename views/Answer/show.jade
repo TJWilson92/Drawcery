@@ -1,0 +1,16 @@
+extends ../layout 
+
+block content
+  script. 
+    var answer = "#{answer_string}";
+  script(type="application/javascript", src="/javascripts/answers/show.js")
+  
+  .row.large-12.columns
+    //- p #{answer}
+    h2 Showing answer
+    hr 
+    h3 
+      u Question:
+      |  #{answer.question[0].questionText}
+    include ../JSME/showanswer.html
+    
