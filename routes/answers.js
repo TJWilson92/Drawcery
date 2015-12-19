@@ -29,16 +29,19 @@ function getUniqueStructures(json_array, ind) {
       // filteredResults will be an array of javascript objects where the value is met\\
       var filteredResults = getFilterOfValue(json_array, ind, thisValue);
       // Begin to process these to be put in the results array
+      var structure_jme = get_jme_format(filteredResults);
       var ids = [];
       for (var a  = 0; a < filteredResults.length; a ++) {
-        ids.push(filteredResults[a]._id);
+        id_string = filteredResults[a]._id.toString();
+        ids.push(id_string);
       }
 
-      var temp_results = new Object({
+      var temp_results = {
         val: thisValue,
+        val_jme: structure_jme,
         count: filteredResults.length,
         ids: ids
-      });
+      };
 
       results.push(temp_results);
 
@@ -67,6 +70,14 @@ function getFilterOfValue(json_array, field, val) {
     return array_val[field[0]][0][field[1]] === val;
   });
   return results;
+}
+
+// Function to get the jme file format using the SMILES format already get_jme_format
+// Note that SMILES format is named 'val' elsewhere
+function get_jme_format(filteredResults) {
+  var first_entry = filteredResults[0];
+  var jme_structure = first_entry.molecule[0].structure_jme;
+  return(jme_structure);
 }
 
 router.post('/new', function (req, res, next) {
@@ -118,7 +129,8 @@ router.get('/forquestion/:question_id', function (req, res, next) {
       res.render('Answer/showforquestion', {
         answers: Ans,
         question: question,
-        uniqueValues: uniqueValues
+        uniqueValues: uniqueValues,
+        stringified_uniqueValues: JSON.stringify(uniqueValues)
       });
     }
   });
