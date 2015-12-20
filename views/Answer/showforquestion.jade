@@ -10,8 +10,9 @@ block content
   #answer-molecule(style='display:none;')
     | #{question.answerMolecule_jme}
   .row.large-12.columns
-    h3 Question: 
-    h2 #{question.questionText}
+    h2 Question 
+    h3 #{question.questionText}
+    h3 #{question.explanationText}
     hr
     include ../JSME/answersforquestion.html
       

@@ -10,7 +10,9 @@ block content
         .row
           label Question Text 
           textarea(rows=4, id='QuestionText', name='QuestionText', required)
-            
+        .row 
+          label Explanation
+          textarea(rows=4, id='explanationText', name='explanationText', placeholder="Provide an explanation or a mark scheme", required)
         .row 
           label Question Molecule 
           input(type='text', id='QuestionMolecule', name='QuestionMolecule', required)
