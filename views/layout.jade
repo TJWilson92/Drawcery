@@ -4,14 +4,16 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/foundation.css')
+    script(type="application/javascript", src="/javascripts/foundation.min.js")
     
     
     .title-bar(data-responsive-toggle="main-menu" data-hide-for="medium")
-      div(class="title-bar-title" ) 
-        h3 Drawcery      
-      .top-bar-right
-        ul(class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown")
-          li
-            a(href='/questions/new') New Question
+      .row 
+        div(class="title-bar-title" ) 
+          h3 Drawcery      
+        .top-bar-right
+          ul(class="menu vertical" data-responsive-menu="drilldown medium-dropdown")
+            li
+              a(href='/questions/new') New Question
   body
     block content

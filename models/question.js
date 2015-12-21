@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var QuestionSchema = mongoose.Schema({
   questionText: String,
+  marksAvailable: Number,
   explanationText: String,
   molecule: String,
   molecule_jme: String,

@@ -21,6 +21,7 @@ router.post('/new', function (req, res, next) {
   var q = new Question({
     questionText: req.body.QuestionText,
     explanationText: req.body.explanationText,
+    marksAvailable: req.body.MarksAvailable,
     molecule: req.body.QuestionMolecule,
     molecule_jme: req.body.QuestionMolecule_jme,
     answerMolecule: req.body.AnswerMolecule,

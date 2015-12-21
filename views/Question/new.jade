@@ -2,14 +2,17 @@ extends ../layout
 
 block content
   .row.small-12.columns(align='center')
-    h2 New Question!
+    h2 New Question
   
   .row
     div(class="large-4 columns") 
       form(id="newQuestionForm", method="post", action="/questions/new")
         .row
           label Question Text 
-          textarea(rows=4, id='QuestionText', name='QuestionText', required)
+          textarea(rows=4, id='QuestionText', name='QuestionText', placeholder='Write your question here', required)
+        .row 
+          label Marks available 
+          input(type='text', name='MarksAvailable', placeholder='How many marks are available for this question?', required)
         .row 
           label Explanation
           textarea(rows=4, id='explanationText', name='explanationText', placeholder="Provide an explanation or a mark scheme", required)
@@ -18,7 +21,7 @@ block content
           input(type='text', id='QuestionMolecule', name='QuestionMolecule', required)
           input(type='hidden', id='QuestionMolecule_jme', name="QuestionMolecule_jme")
           .row(align='right')
-            .button.success#QMolButton
+            .button.default#QMolButton
               |Take from drawing
       
         .row 
@@ -26,11 +29,12 @@ block content
           input(type='text', id='AnswerMolecule', name='AnswerMolecule', required)
           input(type='hidden', id='AnswerMolecule_jme', name='AnswerMolecule_jme')
           .row(align='right')
-            .button.success#AMolButton
-              | Take from drawing
+            .button.default#AMolButton
+              |Take from drawing
            
-          input(type='submit', class='button default', value='Create Question') 
-          
+          .row 
+            input(type='submit', class='button success', value='Create Question', id='createButton', style='width:100%;') 
+            .button.alert#noStructuresButton(style='width:100%;') Awaiting molecules from editor
     div(class='large-8 columns', align='center')
       div.row
         include ../JSME/new_question_editor.html

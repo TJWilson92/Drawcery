@@ -16,6 +16,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var questions = require('./routes/questions');
 var answers = require('./routes/answers');
+var feedbacks = require('./routes/feedbacks');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/questions', questions);
 app.use('/answers', answers);
+app.use('/feedback', feedbacks);
 
 
 

@@ -13,4 +13,13 @@ block content
       u Question:
       |  #{answer.question[0].questionText}
     include ../JSME/showanswer.html
+    hr 
+    
+    h2 Provide feedback on answer
+    
+    form(id="createFeedbackFrom", method="post", action="/feedbacks/new")
+      label What mark would you award this?
+      label Your feedback
+      textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mar here')
+        
     

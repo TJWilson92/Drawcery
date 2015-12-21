@@ -1,3 +1,4 @@
+// Functions to deal with collecting and drawing all of the unique structures given by students.
 var problem_molecule = document.getElementById("problem-molecule").innerHTML;
 var answer_molecule = document.getElementById("answer-molecule").innerHTML;
 
@@ -12,6 +13,8 @@ function draw_unique_structures(uniqueValues) {
   }
 }
 
+// Functions for sending off AJAX to create generic feedback for structure 
+
 function jsmeOnLoad() {
 
   problem_applet = new JSApplet.JSME("jsme_problem", "500px", "500px", {
@@ -25,6 +28,6 @@ function jsmeOnLoad() {
 
   problem_applet.readMolecule(problem_molecule);
   answer_applet.readMolecule(answer_molecule);
-  
+
   draw_unique_structures(uniqueValues);
 }
