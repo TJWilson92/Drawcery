@@ -13,4 +13,4 @@ var FeedbackSchema = mongoose.Schema({
   mark: Number
 });
 
-var Answer = module.exports = mongoose.model('Answer', AnswerSchema);
+var Feedback = module.exports = mongoose.model('Feedback', FeedbackSchema);

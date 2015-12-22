@@ -1,7 +1,10 @@
 extends ../layout
   
 block content 
-  script(type="application/javascript", src="/jquery-1.11.3.min.js")
+  script.
+    var question = interpretStringNodeObject("#{question_string}")
+    
+  
        
   //- Place (but hide) molecular structures for JSME
   #stringified_uniqueValues(style='display:none;')
@@ -60,7 +63,6 @@ block content
             .large-3.columns
               p 
             .large-6.columns
-              
                 input(type='hidden', name='Question', id='#{structure.val}_Question' value="#{question}")
                 input(type='hidden', name='Molecule', id='#{structure.val}_Molecule', value="#{structure.val}")
                 input(type='hidden', name='AnswerIds',id='#{structure.val}_AnswerIds', value='#{structure.ids}')
@@ -73,7 +75,7 @@ block content
                 label Feedback
                 textarea(rows=4, name='FeedbackText', id='#{structure.val}_feedback', placeholder='Provide feedback', required)
                 .row(align='center')
-                  .button.default Submit
+                  .button.default(onclick='createGenericFeedback("#{structure.val}", question)') Submit
             .large-3.columns
             
           hr 

@@ -11,7 +11,7 @@ var Question = require('../models/question.js');
 // ind is the index we want - can be integer or string
 // ind is an [array] because of embedded documents
 function getUniqueStructures(json_array) {
-  var ind = ['molecule', 'structure']
+  var ind = ['molecule', 'structure'];
   var results = [];
 
   // For each item in the json_array
@@ -127,6 +127,7 @@ router.get('/forquestion/:question_id', function (req, res, next) {
       res.render('Answer/showforquestion', {
         answers: Ans,
         question: question,
+        question_string: JSON.stringify(question),
         uniqueValues: uniqueValues,
         stringified_uniqueValues: JSON.stringify(uniqueValues)
       });

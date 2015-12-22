@@ -1,5 +1,4 @@
-answer = answer.replace(/&quot;/g, '\"');
-answer = JSON.parse(answer);
+answer = interpretStringNodeObject(answer);
 var editHistory = answer.molecule[0].editHistory;
 var problem_molecule = answer.question[0].molecule_jme;
 var answer_molecule = answer.molecule[0].structure_jme;
