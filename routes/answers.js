@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Molecule = require('../models/molecule.js');
 var Answer = require('../models/answer.js');
 var Question = require('../models/question.js');
+var Feedback = require('../models/feedback.js');
 
 // Functions to get unique chemical structures (SMILES and JME) given to a questioin
 // It returns {val: String, count: Int, ids: Array}
@@ -140,10 +141,14 @@ router.get('/show/:id', function (req, res, next) {
     if (err) throw err;
     var answer_string = JSON.stringify(ans);
     var editHistory_string = JSON.stringify(ans.molecule.editHistory);
-    res.render('Answer/show', {
-      answer: ans,
-      answer_string: answer_string,
-      editHistory_string: editHistory_string
+    Feedback.find({"answer._id": ans._id}).exec(function (err, feedbacks) {
+      console.log(feedbacks);
+      res.render('Answer/show', {
+        answer: ans,
+        answer_string: answer_string,
+        editHistory_string: editHistory_string,
+        feedbacks: feedbacks
+      });
     });
   });
 });

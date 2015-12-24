@@ -1,7 +1,38 @@
 var express = require('express');
 var router = express.Router();
+var Question = require('../models/feedback');
 var Answer = require('../models/answer');
 var Feedback = require('../models/feedback');
+
+
+router.post('/new', function (req, res, next) {
+  var isForSpecificAnswer = req.body.isForSpecificAnswer === "true";
+  var question = req.body.question_id;
+  var answer = req.body.answer_id;
+  var mark = req.body.mark;
+  var feedbackText = req.body.feedbackText;
+
+
+
+  Question.findById(question).exec(function (err, q) {
+    Answer.findById(answer).exec(function (err, a) {
+      var newFeedback = new Feedback({
+        isForSpecificAnswer: isForSpecificAnswer,
+        question: q,
+        answer: a,
+        mark: mark,
+        feedbackText: feedbackText
+      });
+
+      newFeedback.save(function (err, saved_feedback) {
+        if (err) throw err;
+        res.redirect('/answers/show/' + answer);
+      });
+    });
+  });
+
+
+});
 
 // This function creates a feedback item for ever answer which gave a set response to a question
 // It comes from answers/forquestion and comes as an AJAX call
@@ -24,7 +55,7 @@ router.post('/genericForQuestion', function (req, res, next) {
           question: question,
           answer: ans,
           feedbackText: feedbackText,
-          mark: Number.mark
+          mark: Number(mark)
         });
         console.log(feedback);
         feedback.save(function (err) {

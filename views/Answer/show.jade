@@ -15,11 +15,40 @@ block content
     include ../JSME/showanswer.html
     hr 
     
+    if feedbacks.length > 0
+      h3 Existing Feedback: 
+      each f in feedbacks
+        .row.large-12.columns
+          
+          if f.isForSpecificAnswer
+            .div.callout.success
+              b Mark: 
+                | #{f.mark} 
+              p #{f.feedbackText}
+              hr
+              div(align='center')
+                h6 (Note: This feedback was given to this answer in specific)
+          
+          else 
+            .callout.alert 
+              b Mark: 
+                | #{f.mark} 
+              p #{f.feedbackText}
+              hr
+              div(align='center')
+                h6 (Note: This feedback was given to all respondents who gave the structure you did)
+          
+            
+    else 
+      h3 No feedback given yet
     h2 Provide feedback on answer
     
-    form(id="createFeedbackFrom", method="post", action="/feedbacks/new")
-      label What mark would you award this?
-      label Your feedback
+    form(id="createFeedbackFrom", method="post", action="/feedback/new")
+      input(type='hidden', name='isForSpecificAnswer', value="true")
+      input(type='hidden', name='answer_id', value="#{answer._id}")
+      input(type='hidden', name='question_id', value="#{answer.question[0]._id}")
+      input(type='text', name='mark', placeholder='What mark would you award this?')
       textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mar here')
+      input(type='submit', class='button', value='Submit')
         
     
