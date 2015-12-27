@@ -1,5 +1,63 @@
 extends ../layout 
 
 block content
-  .row.large-12.columns 
-    h2 Welcome to Drawcery
+  .callout.large
+    .row.column.text-center
+      
+      .large-3.columns
+        p
+      .large-6.columns
+        h1 Welcome to Drawcery
+        h4 Drawcery is an easy-to-use web-app for posing and answering organic chemistry problems. This site was made with love by the SoCER group at the University of Southampton.
+      .large-3.columns
+        p 
+      hr
+    .row.text-center 
+      .large-3.columns
+        h3 Login  
+        form(id="loginForm", method="post", action="/users/login")
+          label Email address
+          input(type='text', name='username')
+          label Password
+          input(type='password', name='password')
+          input(type='submit', class='button primary', value='login')
+      .large-6.columns
+        p.lead You don't need an account to make a question on Drawcery, get started now. 
+        a(class="button large primary", href='/questions/new') Make a new question now!
+      .large-3.columns
+        h3 Want an account?
+        br 
+        h5 Are you a...
+        .row.text-center
+          a(class="button large primary", href='/RegisterTeacher') Teacher?
+          a(class = "button large secondary", href='/Register') Student?
+            
+  .row.text-center
+    h1 Why Drawcery?
+  .row 
+    .medium-4.columns.text-center
+      h3 Easy to Draw
+      p Drawcery uses Peter Ertl's JSME molecule editor (a  javascript implementation of the JME editor) - meaning you can draw the structure just as you need to. 
+      a(class='th', href='ç')
+        img(src='/images/frontpage/jsme_editor.png')
+      a(href='http://peter-ertl.com/jsme/') All rights reserved Peter Ertl
+    .medium-4.columns.text-center
+      h3 Easy to Say
+      p This makes it super easy to draw and take molecules - whether you're asking or answering, submitting a molecule is as easy as pushing a button. 
+      a(class='th')
+        img(src='/images/frontpage/take_molecule.png')
+    .medium-4.columns.text-center
+      h3 Focus on Feedback
+      p Which gives you time to focus on what really matters - giving feedback to your students. This can be individualised to single answers, or can be to every student who gave a particular answer to a question. 
+      a(class='th')
+        img(src='/images/frontpage/feedback.png')
+  hr
+ 
+  footer.footer
+    p 
+      | SoCER is the University of Southapton's Chemical Education Research Group. Drawcery was made with love and cuddles by them. The boring and infuriating jobs of code development, deployment, and maintenance were done by Ph.D. student 
+      a(href="http://www.twitter.com/tjwilson92") Tom Wilson 
+      | so please direct any communications towards him. All rights reserved by the group and University. We would like to iterate again that the JSME molecular editor was created, and owned by, 
+      a(href='http://peter-ertl.com/jsme') Peter Ertl 
+      | and we fully acknowledge the rights and intellectual property of the original author. 
+      

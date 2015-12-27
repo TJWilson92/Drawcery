@@ -13,13 +13,16 @@ html
       .row 
         if user
           .title-bar-title 
-            h3 Drawcery | Welcome #{user.firstname} #{user.surname}
+            h3 Drawcery | Welcome, #{user.firstname} #{user.surname}
+          .top-bar-right
+            ul.menu(data-responsive-menu="drilldown medium-dropdown")
+              li
+                a(href='/questions/new') New Question
+              li 
+                a(href='/users/logout') Logout
         else 
           .title-bar-title 
             h3 Drawcery      
-        .top-bar-right
-          ul(class="menu vertical" data-responsive-menu="drilldown medium-dropdown")
-            li
-              a(href='/questions/new') New Question
+        
   body
     block content

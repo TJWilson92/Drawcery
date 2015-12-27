@@ -43,7 +43,7 @@ block content
       h3 No feedback given yet
     h2 Provide feedback on answer
     
-    form(id="createFeedbackFrom", method="post", action="/feedback/new"on)
+    form(id="createFeedbackFrom", method="post", action="/feedback/new")
       input(type='hidden', name='isForSpecificAnswer', value="true")
       input(type='hidden', name='answer_id', value="#{answer._id}")
       input(type='hidden', name='question_id', value="#{answer.question[0]._id}")
