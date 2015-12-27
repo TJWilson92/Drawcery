@@ -1,0 +1,23 @@
+extends ../layout
+
+block content 
+  .row.large-12.columns 
+    h2 Register new teacher
+    if errorMessage
+      .callout.warning
+        ul
+        each e in errorMessage
+          li #{e}
+    
+    form(id="", method="post", action="/users/newEducator")
+      label Your e-mail address
+      input(type='email', name='email', placeholder = 'whatever@you.want', required)
+      label First name
+      input(type='text', name='firstname', placeholder='Luke', required)
+      label Surname
+      input(type='text', name='surname', placeholder='Skywalker', required)
+      label Password (must be more than 5 characters)
+      input(type='password', name='password1', placeholder='Make it secure' required)
+      label Confirm password
+      input(type='password', name='password2', placeholder='Please', required)
+      input(type='submit', class='button primary', value='Create Account')

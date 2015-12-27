@@ -1,0 +1,12 @@
+extends ../layout
+
+block content 
+  .row.large-12.columns
+    h2 Log In 
+    form(id="loginForm", method="post", action="/users/login")
+      label Email address
+      input(type='text', name='username')
+      label Password
+      input(type='password', name='password')
+      input(type='submit', class='button primary', value='login')
+    

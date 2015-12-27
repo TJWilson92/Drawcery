@@ -11,8 +11,12 @@ html
     
     .title-bar(data-responsive-toggle="main-menu" data-hide-for="medium")
       .row 
-        div(class="title-bar-title" ) 
-          h3 Drawcery      
+        if user
+          .title-bar-title 
+            h3 Drawcery | Welcome #{user.firstname} #{user.surname}
+        else 
+          .title-bar-title 
+            h3 Drawcery      
         .top-bar-right
           ul(class="menu vertical" data-responsive-menu="drilldown medium-dropdown")
             li
