@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
+var UserSchema = mongoose.model('User').schema;
 
 var QuestionSchema = mongoose.Schema({
+  date: {type: Date, default: Date.now},
+  anonymous: Boolean,
+  email: String,
+  askedBy: UserSchema,
   questionText: String,
   marksAvailable: Number,
   explanationText: String,
