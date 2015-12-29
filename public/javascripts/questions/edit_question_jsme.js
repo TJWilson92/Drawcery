@@ -1,3 +1,19 @@
+$('#donotdelete').hide(function () {});
+$('#deleteConfirm').hide(function () {});
+
+$('#deleteButton').click(function () {
+  $('#donotdelete').slideToggle('slow', function () {});
+  $('#deleteConfirm').slideToggle('slow', function () {});
+});
+
+$('#donotdelete').click(function () {
+  $('#donotdelete').slideToggle('slow', function () {
+  });
+
+  $('#deleteConfirm').slideToggle('slow', function () {
+  });
+});
+
 function jsmeOnLoad() {
 
     jsmeApplet = new JSApplet.JSME("jsme_container", "500px", "500px", {

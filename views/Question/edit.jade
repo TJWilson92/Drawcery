@@ -4,6 +4,14 @@ block content
   .callout.large.text-center
     h2 Editing question 
     p.lead Once you've made your changes just hit save.
+    hr
+    p Or if you want to delete the button, you can do so by below
+    form(id="deleteQuestion", method="post", action="/questions/delete")
+      input(type='hidden', name='question_id', value='#{question._id}')
+      div.button.large.alert#deleteButton Delete Question
+      br
+      div.button.small.secondary#donotdelete No, don't delete!
+      input(type='submit', id='deleteConfirm', class='button small alert' value='Yes, delete question (forever)')
   
   .row
     div(class="large-4 columns") 
