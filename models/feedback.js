@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var AnswerSchema = mongoose.model('Answer').schema;
 var QuestionSchema = mongoose.model('Question').schema;
-var UserSchema = mongoose.modeil('User').schema;
+var UserSchema = mongoose.model('User').schema;
 
 // Feedback is any formative assessment provided by an educator for any Answer
 // or set of answers with a specific structure

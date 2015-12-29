@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-
+var session = require('express-session');
+var MongoStore = require('connect-mongo/es5')(session);
 var mongoose_url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/drawcery';
 
 mongoose.connect(mongoose_url, function () {
@@ -37,10 +38,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('express-session')({
-  secret: 'drawcerysecret',
+app.use(session({
+  secret: "not-keyboard-cat",
+  saveUninitialized: false,
   resave: false,
-  saveUninitialized: false
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 0.5 * 24 * 60 * 60 // = 0.5 days
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session());

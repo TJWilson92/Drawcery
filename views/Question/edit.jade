@@ -1,0 +1,41 @@
+extends ../layout 
+
+block content
+  .callout.large.text-center
+    h2 Editing question 
+    p.lead Once you've made your changes just hit save.
+  
+  .row
+    div(class="large-4 columns") 
+      form(id="editQuestionForm", method="post", action="/questions/editQ")
+        input(type='hidden', value='#{question._id}', name='question_id')
+        .row
+          label Question Text 
+          textarea(rows=4, id='QuestionText', name='QuestionText', required) #{question.questionText}
+        .row 
+          label Marks available 
+          input(type='text', name='MarksAvailable', value='#{question.marksAvailable}' required)
+        .row 
+          label Explanation
+          textarea(rows=4, id='explanationText', name='explanationText', required) #{question.explanationText}
+        .row 
+          label Question Molecule 
+          input(type='text', id='QuestionMolecule', name='QuestionMolecule', value="#{question.molecule}", required)
+          input(type='hidden', id='QuestionMolecule_jme', name="QuestionMolecule_jme", value='#{question.molecule_jme}')
+          .row(align='right')
+            .button.default#QMolButton
+              |Take from drawing
+      
+        .row 
+          label Answer Molecule
+          input(type='text', id='AnswerMolecule', name='AnswerMolecule', value='#{question.answerMolecule}' required)
+          input(type='hidden', id='AnswerMolecule_jme', name='AnswerMolecule_jme', value='#{question.answerMolecule_jme}')
+          .row(align='right')
+            .button.default#AMolButton
+              |Take from drawing
+           
+          .row 
+            input(type='submit', class='button success', style='width:100%;', value='save changes') 
+    div(class='large-8 columns', align='center')
+      div.row
+        include ../JSME/edit_question_editor.html

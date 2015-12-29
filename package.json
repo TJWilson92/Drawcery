@@ -20,6 +20,7 @@
     "foundation":"*",
     "passport": "*",
     "passport-local-mongoose": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "connect-mongo":"*"
   }
 }
