@@ -9,6 +9,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var session = require('express-session');
 var MongoStore = require('connect-mongo/es5')(session);
+var nodemailer = require('nodemailer');
+var email_details = require('./email_details');
+
 var mongoose_url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/drawcery';
 
 mongoose.connect(mongoose_url, function () {
@@ -25,6 +28,7 @@ var users = require('./routes/users');
 var questions = require('./routes/questions');
 var answers = require('./routes/answers');
 var feedbacks = require('./routes/feedbacks');
+var groups = require('./routes/groups');
 
 var app = express();
 
@@ -56,9 +60,18 @@ app.use('/users', users);
 app.use('/questions', questions);
 app.use('/answers', answers);
 app.use('/feedback', feedbacks);
+app.use('/groups', groups);
 
-
-
+var transporter = nodemailer.createTransport({
+  host: 'smtp-mail.outlook.com',
+  port: 587,
+  tls: {ciphers: 'SSLv3'},
+  secureConnection: false,
+  auth: {
+    user: email_details.address,
+    pass: email_details.password
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

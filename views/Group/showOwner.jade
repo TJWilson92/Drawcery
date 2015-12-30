@@ -1,0 +1,10 @@
+extends ../layout
+
+block content 
+  .row
+    h1 #{group.name} (Owner view)
+    
+    form(id="joingroup", method="post", action="/groups/joingroup")
+      input(type='hidden', name='user_id', value="#{user._id}")
+      input(type='hidden', name='group_id', value="#{group._id}")
+      input(type='submit', class='button success large', value ='Join Group')

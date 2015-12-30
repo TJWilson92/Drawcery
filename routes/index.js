@@ -2,16 +2,20 @@ var express = require('express');
 var router = express.Router();
 
 var Question = require('../models/question.js');
+var Group = require('../models/group.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.user) {
+  if (req.user.isEducator) {
     Question.find({'askedBy._id': req.user._id}).sort({'date': 'desc'}).exec(function (err, questions) {
-      res.render('Home/EducatorHome', {
-        title: 'Drawcery | Home',
-        user: req.user,
-        questions: questions,
-        base_protocol: req.protocol,
-        base_url: req.get('host')
+      Group.find({"ownedBy._id": req.user._id}).exec(function (err, groups) {
+        res.render('Home/EducatorHome', {
+          title: 'Drawcery | Home',
+          user: req.user,
+          questions: questions,
+          groups: groups,
+          base_protocol: req.protocol,
+          base_url: req.get('host')
+        });
       });
     });
 

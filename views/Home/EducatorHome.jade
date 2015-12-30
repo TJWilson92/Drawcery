@@ -1,36 +1,71 @@
 extends ../layout
 
 block content
+  script(type="application/javascript", src="/javascripts/home/educator_home.js")
   .callout.secondary.text-center
     h1 Educator Home
     p.lead This home page provides access to all the questions you've asked so far.
     div(align='center')
       a(href='/questions/new', class='button large success') Ask New Question
   
+  
+  .row.text-center
+    h2 Your Groups
     
-  .row.text-center
-    h2 Your questions
-  .row.text-center
-    .medium-4.columns
-      h4 Details
-    .medium-4.columns
-      h4 Link to answer
-    .medium-4.columns
-      h4 Edit 
-  each q in questions 
-    .row
-      .medium-4.columns  
-        h4 #{q.questionText}
-        h5 #{q.marksAvailable} Marks available
+    if groups.length < 1
+      h3 You have no groups yet ):
+    else
+      
+      table(align='center')
+        thead 
+          th Group Name 
+          th Number Members
+        tbody 
+          each g in groups 
+            tr 
+              td 
+                a(href='/groups/show/#{g._id}') #{g.name}
+              td #{g.members.length}
+              
+                
+        
+    
+    .row 
+      .small-4.columns 
+        p   
+      .small-4.columns
+        .button.primary.large#newGroupButton New Group
+        div#newGroupContainer
+          form(id="newGroupForm", method="post", action="/groups/new")
+            input(type='text', name='groupName', placeholder="New group name", required)
+            input(type='submit', class='button success', value='Create')
+      .small-4.columns
+        
+    
+  .callout
+    .row.text-center
+      h2 Your questions
+    .row.text-center
       .medium-4.columns
-        label Sharable link...
-        input(type='text', value='#{base_protocol}://#{base_url}/questions/show/#{q._id}', onclick="this.select();")
-        label Go there yourself
-        a(class='button', href='/questions/show/#{q._id}') Go to answer page
-         
+        h4 Details
       .medium-4.columns
-        a(href='/questions/editQ/#{q._id}', class='button primary') Edit
-        a(href='/questions/delete/#{q._id}', class='button warning') Delete
-      hr
+        h4 Link to answer
+      .medium-4.columns
+        h4 Edit 
+    each q in questions 
+      .row
+        .medium-4.columns  
+          h4 #{q.questionText}
+          h5 #{q.marksAvailable} Marks available
+        .medium-4.columns
+          label Sharable link...
+          input(type='text', value='#{base_protocol}://#{base_url}/questions/show/#{q._id}', onclick="this.select();")
+          label Go there yourself
+          a(class='button', href='/questions/show/#{q._id}') Go to answer page
+           
+        .medium-4.columns.text-center
+          a(href='/questions/editQ/#{q._id}', class='button large primary') Edit
+          
+        hr
       
     

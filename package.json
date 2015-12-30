@@ -21,6 +21,7 @@
     "passport": "*",
     "passport-local-mongoose": "*",
     "passport-local": "*",
-    "connect-mongo":"*"
+    "connect-mongo":"*",
+    "nodemailer":"*"
   }
 }

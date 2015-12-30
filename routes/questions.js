@@ -8,9 +8,14 @@ var User = require('../models/user.js');
 router.get('/show/:id', function (req, res, next) {
   Question.findById(req.params.id).exec(function (err, qs) {
     if (err) throw err;
-    res.render('Question/show', {
-      question: qs
-    });
+    if (qs) {
+      res.render('Question/show', {
+        question: qs
+      });
+    } else {
+      res.redirect('/', 301);
+    }
+
   });
 });
 
@@ -25,11 +30,14 @@ router.get('/new', function (req, res, next) {
 router.get('/editQ/:id', function (req, res, next) {
   Question.findById(req.params.id).exec(function (err, question) {
     if (err) throw err;
-    console.log(question);
-    res.render('Question/edit', {
-      question: question,
-      title: 'Drawcery | Edit Question'
-    });
+    if (question) {
+      res.render('Question/edit', {
+        question: question,
+        title: 'Drawcery | Edit Question'
+      });
+    } else {
+      res.redirect('/', 301);
+    }
   });
 });
 
@@ -91,6 +99,21 @@ router.post('/editQ', function (req, res, next) {
     q.save(function (err, q) {
       res.redirect('/');
     });
+  });
+});
+
+router.post('/delete', function (req, res, next) {
+  Question.findById(req.body.question_id).exec(function (err, q) {
+    if (err) throw err;
+    var user_id = req.user._id;
+    var owner = user_id.equals(q.askedBy._id);
+    if (owner) {
+      q.remove(function (err) {
+        res.redirect('/', 301);
+      });
+    } else {
+      res.redirect('/', 301);
+    }
   });
 });
 
