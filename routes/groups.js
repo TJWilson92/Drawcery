@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Group = require('../models/group');
 var User = require('../models/user');
+var Question = require('../models/question');
 
 router.get('/show/:id', function (req, res, next) {
   if (req.user) {
@@ -11,10 +12,15 @@ router.get('/show/:id', function (req, res, next) {
         throw err;
       } else {
         if (group.ownedBy._id.equals(req.user._id)) {
-          res.render('Group/showOwner', {
-            title: "Drawcerty | Group",
-            group: group,
-            user: {_id: req.user._id}
+          Question.find({"askedBy._id": req.user._id}).exec(function (err, questions) {
+            res.render('Group/showOwner', {
+              title: "Drawcerty | Group",
+              group: group,
+              questions: questions,
+              user: {_id: req.user._id},
+              base_protocol: req.protocol,
+              base_host: req.get('host')
+            });
           });
         } else if (groups.members.length > 0) {
           var userIsMember = Group.members.any(function (curr, ind, arr) {
@@ -51,6 +57,7 @@ router.post('/new', function (req, res, next) {
 
   var newGroup = new Group({
     name: req.body.groupName,
+    about: req.body.about,
     ownedBy: safeOwner
   });
 
@@ -88,6 +95,23 @@ router.post('/joingroup', function (req, res, next) {
         });
       });
     }
+  });
+});
+
+router.post('/newNotification', function (req, res, next) {
+  var d = Date.now();
+  var not = { //
+    title: req.body.title,
+    text: req.body.text,
+    date: d
+  };
+  Group.findById(req.body.group_id).exec(function (err, group) {
+    if (err) throw err;
+    group.notifications.push(not);
+    group.save(function (err, g) {
+      if (err) throw err;
+      res.redirect('/groups/show/' + g._id);
+    });
   });
 });
 

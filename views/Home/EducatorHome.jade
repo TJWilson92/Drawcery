@@ -38,6 +38,7 @@ block content
         div#newGroupContainer
           form(id="newGroupForm", method="post", action="/groups/new")
             input(type='text', name='groupName', placeholder="New group name", required)
+            textarea(name='about', placeholder="Give this group a description")
             input(type='submit', class='button success', value='Create')
       .small-4.columns
         

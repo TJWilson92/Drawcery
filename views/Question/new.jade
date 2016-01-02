@@ -31,6 +31,13 @@ block content
           .row(align='right')
             .button.default#AMolButton
               |Take from drawing
+        if groups 
+          .row 
+            label Add to group?
+            select(name='group_id', id='group_name')
+              option(value=null) Select Group
+              each g in groups 
+                option(value='#{g._id}') #{g.name}
            
           .row 
             input(type='submit', class='button success', value='Create Question', id='createButton', style='width:100%;') 

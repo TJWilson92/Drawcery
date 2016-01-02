@@ -1,5 +1,11 @@
 extends ../layout 
 
 block content 
-  .row
-    h1 #{group.name} (Not a member)
+  .callout.large.text-center
+    h1 #{group.name}
+    p.lead It doesn't look like you're a member of this group. Groups are a way to easily share questions in Drawcery, and by hitting the Join button below you will recieve e-mail an e-mail notification whenever the owner posts a new question in it. 
+    br
+    form(id="joingroup", method="post", action="/groups/joingroup")
+      input(type='hidden', name='user_id', value="#{user._id}")
+      input(type='hidden', name='group_id', value="#{group._id}")
+      input(type='submit', class='button success large', value ='Join Group')

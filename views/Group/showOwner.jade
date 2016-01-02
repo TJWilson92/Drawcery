@@ -1,10 +1,84 @@
 extends ../layout
 
 block content 
-  .row
-    h1 #{group.name} (Owner view)
+  script(type="application/javascript", src="../../javascripts/groups/ownerShow.js")
+  .callout.secondary.large.text-center
+    h1 #{group.name} (Admin View)
+    p.lead #{group.about}
+    hr
+    .row 
+      .large-4.columns.text-center
+        p Number of notification: 
+        h1 #{group.notifications.length}
+        hr 
+        #showNewNotificationButton(class='button large primary') Create new notification
+      .large-4.columns.text-center
+        p Number of members: 
+        h1 #{group.members.length}
+        hr
+        p you can invite members by copy-pasting this URL 
+        input(type='text', value='#{base_protocol}://#{base_host}/groups/show/#{group._id}', onclick="this.select()", align='center')
+      .large-4.columns.text-center
+        p Number of questions:
+        h1 #{group.questions.length}
+        hr 
+        #addQuestionButton(class='button large primary') Add question to group
+  .row.large-12.columns
+    if group.notifications.length > 0 
+      .row.text-center
+        h2 Notifications 
+      each n in group.notifications
+        .row 
+        h3 #{n.title}
+        h5 #{n.text}
+        p (#{n.date})
+        hr
     
-    form(id="joingroup", method="post", action="/groups/joingroup")
-      input(type='hidden', name='user_id', value="#{user._id}")
-      input(type='hidden', name='group_id', value="#{group._id}")
-      input(type='submit', class='button success large', value ='Join Group')
+  .row.large-12.columns.text-center#newNotificationDiv
+    form(id="newNotificationFrom", method="post", action="/groups/newNotification")
+      input(type='hidden', name='group_id', value='#{group._id}')
+      input(type='text', name='title', placeholder='Title', style='width: 50%;')
+      textarea(name='text', placeholder="Notification message", rows=4)
+      input(type='submit', class='button success', value='create notification')
+      hr
+  .row.large-12.columns.text-center
+    h2 Questions
+    //- Questions already in group
+    .row(align='center')
+      table.text-center
+        thead
+          th Question Text 
+          th View 
+        tbody 
+          each q in group.questions 
+            tr
+              td #{q.questionText}
+              td
+                a(href='/questions/show/#{q._id}') View 
+    
+    //- Add questions to group  
+    .row#addQuestionsDiv
+      hr  
+      .small-6.columns
+        //- Add existing Question 
+        h5 Add existing question
+        table(align='center')
+          thead 
+            th Question 
+            th Link
+          tbody 
+            each q in questions
+              tr 
+                td #{q.questionText}
+                td
+                  form(id="addQuestionToGroup", method="post", action="/questions/addToGroup") 
+                    input(type='hidden', value='#{group._id}', name="group_id")
+                    input(type='hidden', value='#{q._id}', name='question_id')
+                    input(type='submit', class='button small', value='Add question to Group')
+      .small-6.columns
+        //- New Question
+        h5 Make new question 
+        a(class='button large success', href='/questions/new') Create Question
+  
+  .callout.secondary.text-center
+    h2 Members

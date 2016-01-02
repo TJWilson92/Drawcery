@@ -5,7 +5,7 @@ var Question = require('../models/question.js');
 var Group = require('../models/group.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.user.isEducator) {
+  if (req.user && req.user.isEducator) {
     Question.find({'askedBy._id': req.user._id}).sort({'date': 'desc'}).exec(function (err, questions) {
       Group.find({"ownedBy._id": req.user._id}).exec(function (err, groups) {
         res.render('Home/EducatorHome', {
