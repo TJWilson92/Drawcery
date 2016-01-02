@@ -1,20 +1,38 @@
 var express = require('express');
 var router = express.Router();
+var nodemailer = require('nodemailer');
+var email_details = require('../email_details');
+var transporter = nodemailer.createTransport({
+  host: 'smtp-mail.outlook.com',
+  port: 587,
+  tls: {ciphers: 'SSLv3'},
+  secureConnection: false,
+  auth: {
+    user: email_details.address,
+    pass: email_details.password
+  }
+});
 
 var Question = require('../models/question');
 var Molecule = require('../models/molecule');
 var User = require('../models/user');
 var Group = require('../models/group');
 
+
 router.post('/addToGroup', function (req, res, next) {
-  console.log(req.body);
   Question.findById(req.body.question_id).exec(function (err, question) {
-    console.log(question);
     if (err) throw err;
     Group.findById(req.body.group_id).exec(function (err, group) {
-      console.log(group);
       group.questions.push(question);
       group.save(function (err, q) {
+        group.members.forEach(function (val, ind, arr) {
+          transporter.sendMail({
+            from: 'drawcery-robot@outlook.com',
+            to: val.email,
+            subject: 'New Question on Drawcery!',
+            text: 'A new question has been added to the group ' + group.name + ' go and log in to Drawcery to see it.'
+          });
+        });
         res.redirect('/groups/show/' + group._id);
       });
     });
@@ -116,6 +134,14 @@ router.post('/new', function (req, res, next) {
       Group.findById(req.body.group_id).exec(function (err, group) {
         group.questions.push(q);
         group.save(function (err, g) {
+          group.members.forEach(function (val, ind, arr) {
+            transporter.sendMail({
+              from: 'drawcery-robot@outlook.com',
+              to: val.email,
+              subject: 'New Question on Drawcery!',
+              text: 'A new question has been added to the group ' + group.name + ' go and log in to Drawcery to see it.'
+            });
+          });
           res.redirect(301, '../questions/show/' + q._id);
         });
       });
