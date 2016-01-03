@@ -22,21 +22,22 @@ router.get('/show/:id', function (req, res, next) {
               base_host: req.get('host')
             });
           });
-        } else if (groups.members.length > 0) {
-          var userIsMember = Group.members.any(function (curr, ind, arr) {
+        } else if (group.members.length > 0) {
+          var userIsMember = group.members.some(function (curr, ind, arr) {
             return curr._id.equals(req.user._id);
           });
+          console.log(userIsMember);
           if (userIsMember) {
             res.render('Group/show', {
               group: group,
               title: "Drawcery | Group"
             });
+          } else {
+            res.render('Group/showNonMember', {
+              group: group,
+              user: {_id: req.user._id}
+            });
           }
-        } else {
-          res.render('Group/showNonMember', {
-            group: group,
-            user: {_id: req.user._id}
-          });
         }
       }
     });

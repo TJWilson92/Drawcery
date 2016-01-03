@@ -1,4 +1,45 @@
 extends ../layout
 
-block content
-  h1 #{group.name}
+block content 
+  script(type="application/javascript", src="../../javascripts/groups/ownerShow.js")
+  .callout.secondary.large.text-center
+    h1 #{group.name} (Admin View)
+    p.lead #{group.about}
+    hr
+    .row 
+      .large-4.columns.text-center
+        p Number of notification: 
+        h1 #{group.notifications.length}
+      .large-4.columns.text-center
+        p Number of members: 
+        h1 #{group.members.length}
+      .large-4.columns.text-center
+        p Number of questions:
+        h1 #{group.questions.length}
+        
+        
+  .row.large-12.columns
+    if group.notifications.length > 0 
+      .row.text-center
+        h2 Notifications 
+      each n in group.notifications
+        .row 
+        h3 #{n.title}
+        h5 #{n.text}
+        p (#{n.date})
+    
+  .row.large-12.columns.text-center
+    h2 Questions
+    //- Questions already in group
+    .row(align='center')
+      table.text-center
+        thead
+          th Question Text 
+          th View 
+        tbody 
+          each q in group.questions 
+            tr
+              td #{q.questionText}
+              td
+                a(href='/questions/show/#{q._id}') View 
+    

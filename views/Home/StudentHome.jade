@@ -1,0 +1,46 @@
+extends ../layout
+
+block content
+  .callout.secondary.text-center
+    h1 Student Home
+    p.lead This home page provides access to all of your groups, and the questions you've answered so far.
+  
+  .row.text-center
+    h2 Your Groups
+    
+    if groups.length < 1
+      h3 You are not part of any groups yet ):
+    else
+      
+      table(align='center')
+        thead 
+          th Group Name 
+          th Number Members
+        tbody 
+          each g in groups 
+            tr 
+              td 
+                a(href='/groups/show/#{g._id}') #{g.name}
+              td #{g.members.length}
+  
+  .callout
+    .row.text-center
+      h2 Your Answers 
+      
+      if answers.length < 1 
+        h3 You have not answered any questions yet 
+      else 
+        
+        table 
+          thead 
+            th Question 
+            th Feedback?
+            th View Answer
+          tbody 
+            each a in answers 
+              tr 
+                td #{a.question.questionText}
+                td #{a.feedback.length}
+                td 
+                  a(href='/answers/show/#{a._id}') View
+      

@@ -1,10 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+var mongoose = require('mongoose');
 var Question = require('../models/question.js');
 var Group = require('../models/group.js');
+var Molecule = require('../models/molecule');
+var Answer = require('../models/answer');
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.user);
   if (req.user && req.user.isEducator) {
     Question.find({'askedBy._id': req.user._id}).sort({'date': 'desc'}).exec(function (err, questions) {
       Group.find({"ownedBy._id": req.user._id}).exec(function (err, groups) {
@@ -19,6 +23,16 @@ router.get('/', function(req, res, next) {
       });
     });
 
+  } else if (req.user && !req.user.isEducator) {
+    Group.find({"members._id": {$in : req.user._id}}).exec(function (err, groups) {
+      Answer.find({"askedBy._id": req.user._id}).exec(function (err, answers) {
+        res.render('Home/StudentHome', {
+          title: "Drawcery | Home",
+          groups: groups,
+          answers: answers
+        });
+      })
+    });
   } else {
     res.render('Home/Home', {
       title: 'Drawcery'
