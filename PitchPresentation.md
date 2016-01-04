@@ -3,9 +3,9 @@ The presentation (11/1/2016) will follow the order below
 
 TODO:
 [ ] Have e-mail address(es) for each attendee.
-[ ] Create student view for group page
-[ ] Create educator view for an answer
-[ ] Create self-assesment function in view answer (if is own)
+[X] Create student view for group page
+[X] Create educator view for an answer
+[X] Create self-assesment function in view answer (if is own)
 [ ] Add ability to reply to feedback
 [ ] Add reflective prompt to question
 [ ] Add ability to respond to reflective prompt
