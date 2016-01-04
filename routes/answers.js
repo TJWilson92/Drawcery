@@ -142,7 +142,7 @@ router.get('/forquestion/:question_id', function (req, res, next) {
         });
       });
     } else {
-      var question = (Ans[0].question[0]);
+      var question = (Ans[0].question);
       var uniqueValues = getUniqueStructures(Ans);
       res.render('Answer/showforquestion', {
         answers: Ans,
@@ -168,13 +168,13 @@ router.get('/show/:id', function (req, res, next) {
     var answer_string = JSON.stringify(ans);
     var editHistory_string = JSON.stringify(ans.molecule.editHistory);
     Feedback.find({"answer._id": ans._id}).exec(function (err, feedbacks) {
-      console.log(feedbacks);
       res.render('Answer/show', {
         answer: ans,
         visitorIsOwner: visitorIsOwner,
         answer_string: answer_string,
         editHistory_string: editHistory_string,
-        feedbacks: feedbacks
+        feedbacks: feedbacks,
+        user: req.user
       });
     });
   });

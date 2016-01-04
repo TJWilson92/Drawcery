@@ -25,13 +25,14 @@ router.get('/', function(req, res, next) {
 
   } else if (req.user && !req.user.isEducator) {
     Group.find({"members._id": {$in : req.user._id}}).exec(function (err, groups) {
-      Answer.find({"askedBy._id": req.user._id}).exec(function (err, answers) {
+      Answer.find({"answeredBy._id": req.user._id}).exec(function (err, answers) {
         res.render('Home/StudentHome', {
           title: "Drawcery | Home",
           groups: groups,
-          answers: answers
+          answers: answers,
+          user: req.user
         });
-      })
+      });
     });
   } else {
     res.render('Home/Home', {

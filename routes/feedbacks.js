@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
-var Question = require('../models/feedback');
+var Question = require('../models/question');
 var Answer = require('../models/answer');
 var Feedback = require('../models/feedback');
 
@@ -43,7 +43,13 @@ router.post('/new', function (req, res, next) {
 
       newFeedback.save(function (err, saved_feedback) {
         if (err) throw err;
-        res.redirect('/answers/show/' + answer);
+        a.feedback.push(saved_feedback._id);
+        a.save(function (err, a) {
+            res.redirect('/answers/show/' + answer, {
+              user: req.user,
+              title: "Drawcery | Answer"
+            });
+        });
       });
     });
   });
@@ -55,45 +61,50 @@ router.post('/new', function (req, res, next) {
 // It comes from answers/forquestion and comes as an AJAX call
 router.post('/genericForQuestion', function (req, res, next) {
   var safeUser = makeSafeUser(req.user);
-
-  var answer_ids = req.body['AnswerIds[]'];
-  var isForSpecificAnswer = req.body.isForSpecificAnswer;
-  var question = req.body.Question;
+  var answer_ids = req.body.AnswerIds.split(',');
   var feedbackText = req.body.FeedbackText;
-  var mark = req.body.Mark;
+  var mark = req.body.mark;
 
+  Question.findById(req.body.question_id).exec(function (err, question) {
+    answer_ids.forEach(function (ans_id, ind, arr) {
+      Answer.findById(ans_id).exec(function (err, ans) {
+        if (err) throw err;
 
-
-  answer_ids.forEach(function (ans_id, ind, arr) {
-    Answer.findById(ans_id).exec(function (err, ans) {
-      if (err) throw err;
         var feedback = new Feedback({
           selfAssessment: false,
           anonymouse: false,
           providedBy: safeUser,
-          isForSpecificAnswer: isForSpecificAnswer,
+          isForSpecificAnswer: false,
           question: question,
           answer: ans,
           feedbackText: feedbackText,
           mark: Number(mark)
         });
-        console.log(feedback);
-        feedback.save(function (err) {
-          if (err) throw err;
-          console.log(feedback);
+
+        feedback.save(function (err, f) {
+          ans.feedback.push(f._id);
+          ans.save(function (err, a) {
+            if (ind == (arr.length - 1)) {
+              res.redirect('/answers/forQuestion/' + question._id, 301, {
+                user: req.user,
+                title: 'Drawcery | Answers'
+              });
+            }
+          });
         });
+      });
     });
-    if (ind == (arr.length - 1)) {
-      res.send('Complete');
-    }
   });
+
+
+
 
 });
 
 router.post('/newselfassessment', function (req, res, next) {
   var safeUser = makeSafeUser(req.user);
   var mark = req.body.mark;
-  var feedbackText = req.body.feedback_text;
+  var feedbackText = req.body.feedbackText;
   Answer.findById(req.body.answer_id).exec(function (err, a) {
     if (err) throw err;
     Question.findById(a.question._id).exec(function (err, q) {
@@ -110,16 +121,17 @@ router.post('/newselfassessment', function (req, res, next) {
       });
       newFeedback.save(function (err, f) {
         if (err) throw err;
-        res.redirect('/');
+        a.feedback.push(f._id);
+        a.save(function (err, a) {
+          res.redirect('/answers/show/' + a._id, {
+            user: req.user,
+            title: "Drawcery | Answer"
+          });
+        });
       });
     });
   });
 
-
-});
-
-// create new feedback object
-router.post('/new', function (req, res, next) {
 
 });
 

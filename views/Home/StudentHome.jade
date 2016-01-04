@@ -31,7 +31,7 @@ block content
         h3 You have not answered any questions yet 
       else 
         
-        table 
+        table(align='center')
           thead 
             th Question 
             th Feedback?
@@ -40,7 +40,10 @@ block content
             each a in answers 
               tr 
                 td #{a.question.questionText}
-                td #{a.feedback.length}
+                if a.feedback
+                  td #{a.feedback.length}
+                else 
+                  td 0
                 td 
                   a(href='/answers/show/#{a._id}') View
       

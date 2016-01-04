@@ -8,8 +8,9 @@ var AnswerSchema = mongoose.Schema({
   anonymous: Boolean,
   email: String,
   time: {type: Date, default: Date.now},
-  question: [QuestionSchema],
-  molecule: [MoleculeSchema]
+  question: QuestionSchema,
+  molecule: [MoleculeSchema],
+  feedback: [mongoose.Schema.ObjectId]
 });
 
 var Answer = module.exports = mongoose.model('Answer', AnswerSchema);

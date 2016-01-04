@@ -63,19 +63,18 @@ block content
             .large-3.columns
               p 
             .large-6.columns
-                input(type='hidden', name='Question', id='#{structure.val}_Question' value="#{question}")
+              form(id="", method="post", action="/feedback/genericForQuestion")
+                input(type='hidden', name='question_id', value="#{question._id}")
                 input(type='hidden', name='Molecule', id='#{structure.val}_Molecule', value="#{structure.val}")
-                input(type='hidden', name='AnswerIds',id='#{structure.val}_AnswerIds', value='#{structure.ids}')
-                input(type='hidden', name='isForSpecificAnswer', id='#{structure.val}_isForSpecificAnswer', value=false)
+                input(type='hidden', name='AnswerIds', value='#{structure.ids}')
                 input(type='hidden', name='Structure_smiles', id='#{structure.val}_Structure_smiles', value='#{structure.val}')
                 
                 label Number of Marks Awarded
-                input(type='number', name='Mark', id='#{structure.val}_marksAwarded' required)
+                input(type='number', name='mark', id='#{structure.val}_marksAwarded' required)
                   
                 label Feedback
                 textarea(rows=4, name='FeedbackText', id='#{structure.val}_feedback', placeholder='Provide feedback', required)
-                .row(align='center')
-                  .button.default(onclick='createGenericFeedback("#{structure.val}", question)') Submit
+                input(type='submit', value='Send feedback', class='button success')
             .large-3.columns
             
           hr 

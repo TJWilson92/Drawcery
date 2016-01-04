@@ -7,13 +7,39 @@ block content
   
   .row.large-12.columns
     //- p #{answer}
-    h2 Showing answer
+    if !user 
+      h1 Showing answer
+    else if !user.isEducator
+      h1 Showing answer
+    else if visitorIsOwner
+      h1 Showing Your Answer 
+    else if user.isEducator
+      h1 Showing answer (educator view)
+      
     hr 
     h3 
       u Question:
-      |  #{answer.question[0].questionText}
+      |  #{answer.question.questionText}
     include ../JSME/showanswer.html
     hr 
+    if user 
+      if user.isEducator
+        .callout.text-center
+          h1 Edit history
+          table(align='center')
+            thead 
+              th Number 
+              th Time 
+              th Action 
+              th Bond
+            tody 
+            each m in answer.molecule[0].editHistory 
+              tr 
+                td #{m.number}
+                td #{m.time}
+                td #{m.action}
+                td #{m.bond}
+          
     
     if feedbacks.length > 0
       h3 Existing Feedback: 
@@ -48,7 +74,7 @@ block content
       form(id="createFeedbackFrom", method="post", action="/feedback/new")
         input(type='hidden', name='isForSpecificAnswer', value="true")
         input(type='hidden', name='answer_id', value="#{answer._id}")
-        input(type='hidden', name='question_id', value="#{answer.question[0]._id}")
+        input(type='hidden', name='question_id', value="#{answer.question._id}")
         input(type='text', name='mark', placeholder='What mark would you award this?')
         textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here')
         input(type='submit', class='button', value='Submit')
