@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var User = require('../models/user');
 var Molecule = require('../models/molecule.js');
 var Answer = require('../models/answer.js');
 var Question = require('../models/question.js');
@@ -79,7 +80,24 @@ function get_jme_format(filteredResults) {
   return(jme_structure);
 }
 
+function makeSafeUser(user) {
+  var safeUser;
+  if (user === undefined) {
+    safeUser = undefined;
+  } else {
+    safeUser = new User({
+      firstname: user.firstname,
+      surname: user.surname,
+      email: user.email,
+      _id: user._id
+    });
+  }
+  return(safeUser);
+}
+
 router.post('/new', function (req, res, next) {
+  var safeUser = makeSafeUser(req.user);
+
   var questionId = req.body.QuestionId;
   var answerText = req.body.AnswerText;
   var answerMolecule_smiles = req.body.AnswerMolecule_smiles;
@@ -97,7 +115,8 @@ router.post('/new', function (req, res, next) {
 
     var a = new Answer({
       question: q,
-      molecule: m
+      molecule: m,
+      answeredBy: safeUser
     });
 
     m.save(function (err, mol) {
@@ -139,12 +158,20 @@ router.get('/forquestion/:question_id', function (req, res, next) {
 router.get('/show/:id', function (req, res, next) {
   Answer.findById(req.params.id).exec(function (err, ans) {
     if (err) throw err;
+    var visitorIsOwner;
+    if (req.user) {
+      visitorIsOwner = (req.user._id.equals(ans.answeredBy._id));
+    } else {
+      visitorIsOwner = false;
+    }
+
     var answer_string = JSON.stringify(ans);
     var editHistory_string = JSON.stringify(ans.molecule.editHistory);
     Feedback.find({"answer._id": ans._id}).exec(function (err, feedbacks) {
       console.log(feedbacks);
       res.render('Answer/show', {
         answer: ans,
+        visitorIsOwner: visitorIsOwner,
         answer_string: answer_string,
         editHistory_string: editHistory_string,
         feedbacks: feedbacks

@@ -41,14 +41,23 @@ block content
             
     else 
       h3 No feedback given yet
-    h2 Provide feedback on answer
     
-    form(id="createFeedbackFrom", method="post", action="/feedback/new")
-      input(type='hidden', name='isForSpecificAnswer', value="true")
-      input(type='hidden', name='answer_id', value="#{answer._id}")
-      input(type='hidden', name='question_id', value="#{answer.question[0]._id}")
-      input(type='text', name='mark', placeholder='What mark would you award this?')
-      textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mar here')
-      input(type='submit', class='button', value='Submit')
+    
+    if !visitorIsOwner
+      h2 Provide feedback on answer (not owner)
+      form(id="createFeedbackFrom", method="post", action="/feedback/new")
+        input(type='hidden', name='isForSpecificAnswer', value="true")
+        input(type='hidden', name='answer_id', value="#{answer._id}")
+        input(type='hidden', name='question_id', value="#{answer.question[0]._id}")
+        input(type='text', name='mark', placeholder='What mark would you award this?')
+        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here')
+        input(type='submit', class='button', value='Submit')
+    else 
+      h2 Self Assessment
+      form(id="selfAssessmentForm", method="post", action="/feedback/newselfassessment")
+        input(type='hidden', name='answer_id', value='#{answer._id}')
+        input(type='text', name='mark', placeholder='What mark would you award this?')
+        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here')
+        input(type='submit', class='button', value='Submit')
         
     

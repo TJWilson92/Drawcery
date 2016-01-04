@@ -9,6 +9,7 @@ var UserSchema = mongoose.model('User').schema;
 var FeedbackSchema = mongoose.Schema({
   date: {type: Date, default: Date.now},
   anonymous: Boolean,
+  selfAssessment: Boolean,
   providedBy: UserSchema,
   isForSpecificAnswer: Boolean,
   question: QuestionSchema,

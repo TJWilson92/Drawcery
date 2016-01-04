@@ -109,6 +109,7 @@ router.post('/newAnon', function (req, res, next) {
 });
 
 router.post('/new', function (req, res, next) {
+
   var constrainedUser = new User({
     _id: req.user._id,
     email: req.user.email,
@@ -130,7 +131,7 @@ router.post('/new', function (req, res, next) {
 
   q.save(function (err) {
     if (err) throw err;
-    if (req.body.group_id) {
+    if (req.body.group_id != 'Select Group') {
       Group.findById(req.body.group_id).exec(function (err, group) {
         group.questions.push(q);
         group.save(function (err, g) {
