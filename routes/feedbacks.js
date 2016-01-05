@@ -131,8 +131,27 @@ router.post('/newselfassessment', function (req, res, next) {
       });
     });
   });
+});
 
-
+router.post('/createReply', function (req, res, next) {
+  if (req.user) {
+    var safeUser = makeSafeUser(req.user);
+    var reply = new Object({
+      text: req.body.replyText,
+      user: safeUser,
+      date: Date.now()
+    });
+    console.log(reply);
+    Feedback.findById(req.body.feedback_id).exec(function (err, feedback) {
+      feedback.replies.push(reply);
+      feedback.save(function (err, f) {
+        if (err) throw err;
+        res.redirect('back');
+      });
+    });
+  } else {
+    res.redirect('back');
+  }
 });
 
 module.exports = router;

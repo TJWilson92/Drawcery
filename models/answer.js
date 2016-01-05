@@ -5,6 +5,8 @@ var UserSchema = mongoose.model('User').schema;
 
 var AnswerSchema = mongoose.Schema({
   answeredBy: UserSchema,
+  answerText: String,
+  reflectiveResponse: String,
   anonymous: Boolean,
   email: String,
   time: {type: Date, default: Date.now},

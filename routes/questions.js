@@ -122,6 +122,7 @@ router.post('/new', function (req, res, next) {
     askedBy: req.user,
     questionText: req.body.QuestionText,
     explanationText: req.body.explanationText,
+    reflectiveQuestion: req.body.reflectiveQuestion,
     marksAvailable: req.body.MarksAvailable,
     molecule: req.body.QuestionMolecule,
     molecule_jme: req.body.QuestionMolecule_jme,

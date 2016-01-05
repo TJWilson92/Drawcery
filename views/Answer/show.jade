@@ -15,11 +15,27 @@ block content
       h1 Showing Your Answer 
     else if user.isEducator
       h1 Showing answer (educator view)
-      
-    hr 
-    h3 
-      u Question:
-      |  #{answer.question.questionText}
+    h4 Question: #{answer.question.questionText}
+    h4 Explanation given: #{answer.answerText}
+    #problem_jme(style='display:none;') #{answer.question.molecule_jme}
+    #answer_jme(style='display:none;') #{answer.question.answerMolecule_jme}
+    if visitorIsOwner
+      if answer.reflectiveResponse
+        .callout.success.text-center
+          h3 Reflective Question (answered)
+          p.lead #{answer.question.reflectiveQuestion}
+          hr 
+          p.lead #{answer.reflectiveResponse}
+      else
+        .callout.alert.text-center
+          h3 Reflective Question
+          p.lead Consider and answer the following: #{answer.question.reflectiveQuestion}
+          hr 
+          form(id="answerReflection", method="post", action="/answers/reflectivereply")
+            input(type='hidden', name='answer_id', value='#{answer._id}')
+            textarea(rows=3, name='reflectiveText', placeholder="Type your answer here", required)
+            input(type='submit', class='button', value='Submit')
+    hr
     include ../JSME/showanswer.html
     hr 
     if user 
@@ -48,18 +64,48 @@ block content
           
           if f.isForSpecificAnswer
             .div.callout.success
+              h4 Feedback:  
               b Mark: 
                 | #{f.mark} 
               p #{f.feedbackText}
+              hr
+                
+              if f.replies.length > 0
+                h4 Replies:
+                ul
+                each r in f.replies  
+                    li #{r.text} (#{r.date})
+                hr
+              if (user)
+                h4 Write new reply
+                form(id="newReply_#{f._id}", method="post", action="/feedback/createReply")
+                  input(type='hidden', name='feedback_id', value='#{f._id}')
+                  textarea(name='replyText', placeholder="Write a reply to the feedback")
+                  input(type='submit', class='button secondary', value='create' )
               hr
               div(align='center')
                 h6 (Note: This feedback was given to this answer in specific)
           
           else 
-            .callout.alert 
+            .div.callout.secondary
+              h4 Feedback:  
               b Mark: 
                 | #{f.mark} 
               p #{f.feedbackText}
+              hr
+                
+              if f.replies.length > 0
+                h4 Replies:
+                ul
+                each r in f.replies  
+                    li #{r.text} (#{r.date})
+                hr
+              if (user)
+                h4 Write new reply
+                form(id="newReply_#{f._id}", method="post", action="/feedback/createReply")
+                  input(type='hidden', name='feedback_id', value='#{f._id}')
+                  textarea(name='replyText', placeholder="Write a reply to the feedback", required)
+                  input(type='submit', class='button secondary', value='create' )
               hr
               div(align='center')
                 h6 (Note: This feedback was given to all respondents who gave the structure you did)
@@ -76,14 +122,14 @@ block content
         input(type='hidden', name='answer_id', value="#{answer._id}")
         input(type='hidden', name='question_id', value="#{answer.question._id}")
         input(type='text', name='mark', placeholder='What mark would you award this?')
-        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here')
+        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here', required)
         input(type='submit', class='button', value='Submit')
     else 
       h2 Self Assessment
       form(id="selfAssessmentForm", method="post", action="/feedback/newselfassessment")
         input(type='hidden', name='answer_id', value='#{answer._id}')
-        input(type='text', name='mark', placeholder='What mark would you award this?')
-        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here')
+        input(type='text', name='mark', placeholder='What mark would you award this?', required)
+        textarea(rows='4', name='feedbackText', placeholder='Give a textual explanation of your above mark here', required)
         input(type='submit', class='button', value='Submit')
         
     

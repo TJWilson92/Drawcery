@@ -15,7 +15,12 @@ var FeedbackSchema = mongoose.Schema({
   question: QuestionSchema,
   answer: AnswerSchema,
   feedbackText: String,
-  mark: Number
+  mark: Number,
+  replies: [{
+    text: String,
+    user: UserSchema,
+    date: {type: Date, default: Date.now}
+  }]
 });
 
 var Feedback = module.exports = mongoose.model('Feedback', FeedbackSchema);

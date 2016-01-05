@@ -2,13 +2,13 @@
 The presentation (11/1/2016) will follow the order below
 
 TODO:
-[ ] Have e-mail address(es) for each attendee.
-[X] Create student view for group page
-[X] Create educator view for an answer
-[X] Create self-assesment function in view answer (if is own)
-[ ] Add ability to reply to feedback
-[ ] Add reflective prompt to question
-[ ] Add ability to respond to reflective prompt
+- [ ] Have e-mail address(es) for each attendee.
+- [X] Create student view for group page (4/1/2016)
+- [X] Create educator view for an answer (4/1/2016)
+- [X] Create self-assesment function in view answer (if is own) (4/1/2016)
+- [X] Add ability to reply to feedback (5/1/2016)
+- [X] Add reflective prompt to question (5/1/2016)
+- [X] Add ability to respond to reflective prompt (5/1/2016)
 
 ## 1. Make a question
 - Demonstrate the ability to draw a molecule using JSME editor.

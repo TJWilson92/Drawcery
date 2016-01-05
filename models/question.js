@@ -9,6 +9,7 @@ var QuestionSchema = mongoose.Schema({
   questionText: String,
   marksAvailable: Number,
   explanationText: String,
+  reflectiveQuestion: String,
   molecule: String,
   molecule_jme: String,
   answerMolecule: String,

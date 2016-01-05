@@ -17,8 +17,9 @@ html
               a(href='/') Drawcery | Welcome, #{user.firstname} #{user.surname}
           .top-bar-right
             ul.menu(data-responsive-menu="drilldown medium-dropdown")
-              li
-                a(href='/questions/new') New Question
+              if user.isEducator
+                li
+                  a(href='/questions/new') New Question
               li 
                 a(href='/users/logout') Logout
         else 

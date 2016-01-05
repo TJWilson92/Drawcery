@@ -114,6 +114,7 @@ router.post('/new', function (req, res, next) {
     });
 
     var a = new Answer({
+      answerText: answerText,
       question: q,
       molecule: m,
       answeredBy: safeUser
@@ -159,7 +160,7 @@ router.get('/show/:id', function (req, res, next) {
   Answer.findById(req.params.id).exec(function (err, ans) {
     if (err) throw err;
     var visitorIsOwner;
-    if (req.user) {
+    if (req.user && ans.answeredBy) {
       visitorIsOwner = (req.user._id.equals(ans.answeredBy._id));
     } else {
       visitorIsOwner = false;
@@ -176,6 +177,17 @@ router.get('/show/:id', function (req, res, next) {
         feedbacks: feedbacks,
         user: req.user
       });
+    });
+  });
+});
+
+router.post('/reflectivereply', function (req, res, next) {
+  Answer.findById(req.body.answer_id).exec(function (err, ans) {
+    if (err) throw err;
+    ans.reflectiveResponse = req.body.reflectiveText;
+    ans.save(function (err, a) {
+      if (err) throw err;
+      res.redirect('back');
     });
   });
 });

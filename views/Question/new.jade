@@ -11,19 +11,12 @@ block content
           label Question Text 
           textarea(rows=4, id='QuestionText', name='QuestionText', placeholder='Write your question here', required)
         .row 
-          label Marks available 
-          input(type='text', name='MarksAvailable', placeholder='How many marks are available for this question?', required)
-        .row 
-          label Explanation
-          textarea(rows=4, id='explanationText', name='explanationText', placeholder="Provide an explanation or a mark scheme", required)
-        .row 
           label Question Molecule 
           input(type='text', id='QuestionMolecule', name='QuestionMolecule', required)
           input(type='hidden', id='QuestionMolecule_jme', name="QuestionMolecule_jme")
           .row(align='right')
             .button.default#QMolButton
               |Take from drawing
-      
         .row 
           label Answer Molecule
           input(type='text', id='AnswerMolecule', name='AnswerMolecule', required)
@@ -31,6 +24,18 @@ block content
           .row(align='right')
             .button.default#AMolButton
               |Take from drawing
+        .row 
+          label Explanation
+          textarea(rows=4, id='explanationText', name='explanationText', placeholder="Provide an explanation or a mark scheme", required)
+        .row 
+          label Marks available 
+          input(type='text', name='MarksAvailable', placeholder='How many marks are available for this question?', required)
+        
+        .row 
+          label Reflective Questions 
+          textarea(name='reflectiveQuestion', rows=3, placeholder="Reflective questions will be presented to students only after they have answered the question.")
+      
+        
         if groups 
           .row 
             label Add to group?
