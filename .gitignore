@@ -1,3 +1,4 @@
 node_modules/*
 node_modules
+mongo_url.js
 email_details.js

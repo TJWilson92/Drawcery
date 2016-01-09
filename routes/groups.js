@@ -24,21 +24,26 @@ router.get('/show/:id', function (req, res, next) {
           });
         } else if (group.members.length > 0) {
           var userIsMember = group.members.some(function (curr, ind, arr) {
+	    console.log(curr._id.equals(req.user._id));
             return curr._id.equals(req.user._id);
           });
-          console.log(userIsMember);
           if (userIsMember) {
             res.render('Group/show', {
               group: group,
               title: "Drawcery | Group"
             });
           } else {
-            res.render('Group/showNonMember', {
-              group: group,
-              user: {_id: req.user._id}
-            });
-          }
-        }
+              res.render('Group/showNonMember', {
+                group: group,
+                user: {_id: req.user._id}
+              });
+            }
+         } else {
+	  res.render('Group/showNonMember', {
+	    user: req.user, 
+	    group: group
+	  });  
+	}
       }
     });
   } else {

@@ -11,8 +11,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo/es5')(session);
 var nodemailer = require('nodemailer');
 var email_details = require('./email_details');
-
-var mongoose_url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/drawcery';
+var mongo_url = require('./mongo_url');
+var mongoose_url = mongo_url || 'mongodb://localhost/drawcery';
 
 mongoose.connect(mongoose_url, function () {
   console.log('connected to mongoose');
