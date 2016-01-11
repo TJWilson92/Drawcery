@@ -1,8 +1,25 @@
+# Audience Outline
+Drawcery (http://drawcery.com/) is a custom-built, single purpose web-app designed to create, distribute, answer, and provide feedback on organic chemistry problems.
+
+This talk presents the capabilities of Drawcery through demonstration. It will demonstrate:
+
+1. Creating a question.
+2. Distributing the question _via_  e-mail.
+3. Anonymous answering of the question (e.g. for quick polling).
+4. Providing generic feedback to structures.
+5. Creating student accounts
+6. Distributing questions through groups
+7. Providing answer-specific feedback
+8. Self-assessment and reflection functions.
+
+Also want to discuss the SoCER web page: https://socergroup.wordpress.com/
+
+
 # Pitch outline (presenter)
 The presentation (11/1/2016) will follow the order below
 
 TODO:
-- [ ] Have e-mail address(es) for each attendee.
+- [X] Have e-mail address(es) for each attendee.
 - [X] Create student view for group page (4/1/2016)
 - [X] Create educator view for an answer (4/1/2016)
 - [X] Create self-assesment function in view answer (if is own) (4/1/2016)
