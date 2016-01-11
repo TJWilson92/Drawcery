@@ -18,7 +18,7 @@ block content
     h4 Question: #{answer.question.questionText}
     h4 Explanation given: #{answer.answerText}
     #problem_jme(style='display:none;') #{answer.question.molecule_jme}
-    #answer_jme(style='display:none;') #{answer.question.answerMolecule_jme}
+    #answer_jme(style='display:none;') #{answer.molecule[0].structure_jme}
     if visitorIsOwner
       if answer.reflectiveResponse
         .callout.success.text-center

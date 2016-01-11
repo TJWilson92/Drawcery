@@ -141,7 +141,6 @@ router.post('/createReply', function (req, res, next) {
       user: safeUser,
       date: Date.now()
     });
-    console.log(reply);
     Feedback.findById(req.body.feedback_id).exec(function (err, feedback) {
       feedback.replies.push(reply);
       feedback.save(function (err, f) {

@@ -36,7 +36,6 @@ function doValidationChecks(email, password1, password2) {
 
   var validEmail = isValidEmail(email);
   var validPassword = isValidPassword(password1, password2);
-  console.log(validPassword);
 
   if (!validEmail || !validPassword.validPassword) {
 
@@ -56,7 +55,6 @@ function doValidationChecks(email, password1, password2) {
 
 router.post('/newEducator', function (req, res, next) {
   var validationResults = doValidationChecks(req.body.email, req.body.password1, req.body.password2);
-  console.log(validationResults);
   if (!validationResults.isValid) {
     res.render('Home/RegisterTeacher', {
       errorMessage: validationResults.errors
@@ -80,7 +78,6 @@ router.post('/newEducator', function (req, res, next) {
 
 router.post('/newStudent', function (req, res, next) {
   var validationResults = doValidationChecks(req.body.email, req.body.password1, req.body.password2);
-  console.log(validationResults);
 
   if (!validationResults.isValid) {
     res.redirect('/registerTeacher', 301, {

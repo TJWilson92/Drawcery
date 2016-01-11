@@ -10,6 +10,7 @@ var LocalStrategy = require('passport-local');
 var session = require('express-session');
 var MongoStore = require('connect-mongo/es5')(session);
 var nodemailer = require('nodemailer');
+var expressValidator = require('express-validator');
 var email_details = require('./email_details');
 
 var mongoose_url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/drawcery';

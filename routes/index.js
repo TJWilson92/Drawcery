@@ -8,7 +8,6 @@ var Molecule = require('../models/molecule');
 var Answer = require('../models/answer');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.user);
   if (req.user && req.user.isEducator) {
     Question.find({'askedBy._id': req.user._id}).sort({'date': 'desc'}).exec(function (err, questions) {
       Group.find({"ownedBy._id": req.user._id}).exec(function (err, groups) {
@@ -49,7 +48,6 @@ router.get('/login', function (req, res, next) {
 });
 
 router.get('/registerTeacher', function (req, res, next) {
-  console.log(req.body);
   res.render('Home/RegisterTeacher', {
     title: 'Drawcery | New Teacher'
   });

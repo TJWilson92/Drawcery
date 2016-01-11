@@ -96,21 +96,29 @@ function makeSafeUser(user) {
 }
 
 router.post('/new', function (req, res, next) {
-  var safeUser = makeSafeUser(req.user);
+  var safeUser;
 
+  if (req.user) {
+    safeUser = makeSafeUser(req.user);
+  } else {
+    safeUser = {firstname: 'No name given'};
+  }
   var questionId = req.body.QuestionId;
   var answerText = req.body.AnswerText;
   var answerMolecule_smiles = req.body.AnswerMolecule_smiles;
   var answerMolecule_jme = req.body.AnswerMolecule_jme;
   var editHistory = req.body.EditHistory;
+  if (editHistory !== '') {
+    JSON.parse(editHistory);
+  }
 
   Question.findById(questionId).exec(function (err, q) {
     if (err) throw err;
-
+    
     var m = new Molecule({
       structure: answerMolecule_smiles,
       structure_jme: answerMolecule_jme,
-      editHistory: JSON.parse(editHistory)
+      editHistory: editHistory
     });
 
     var a = new Answer({

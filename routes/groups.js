@@ -26,7 +26,6 @@ router.get('/show/:id', function (req, res, next) {
           var userIsMember = group.members.some(function (curr, ind, arr) {
             return curr._id.equals(req.user._id);
           });
-          console.log(userIsMember);
           if (userIsMember) {
             res.render('Group/show', {
               group: group,
@@ -73,7 +72,6 @@ router.post('/new', function (req, res, next) {
 });
 
 router.post('/joingroup', function (req, res, next) {
-  console.log(req.body);
   User.findById(req.body.user_id).exec(function (err, user) {
     if (err) {
       res.redirect('/', 301);
@@ -89,7 +87,6 @@ router.post('/joingroup', function (req, res, next) {
           email: req.user.email,
           _id: req.user._id
         });
-        console.log(safeMember);
         group.members.push(safeMember);
         group.save(function (err, g) {
           res.redirect('/groups/show/' + group._id, 301);
