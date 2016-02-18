@@ -1,8 +1,8 @@
 extends ../layout 
 
 block content
-  script. 
-    var answer = "#{answer_string}";
+  //- script. 
+    //- var answer = "#{answer_string}";
   script(type="application/javascript", src="/javascripts/answers/show.js")
   
   .row.large-12.columns
@@ -40,21 +40,22 @@ block content
     hr 
     if user 
       if user.isEducator
-        .callout.text-center
-          h1 Edit history
-          table(align='center')
-            thead 
-              th Number 
-              th Time 
-              th Action 
-              th Bond
-            tody 
-            each m in answer.molecule[0].editHistory 
-              tr 
-                td #{m.number}
-                td #{m.time}
-                td #{m.action}
-                td #{m.bond}
+        if answer.molecule.length > 0 
+          .callout.text-center
+            h1 Edit history
+            table(align='center')
+              thead 
+                th Number 
+                th Time 
+                th Action 
+                th Bond
+              tody 
+              each m in answer.molecule[0].editHistory 
+                tr 
+                  td #{m.number}
+                  td #{m.time}
+                  td #{m.action}
+                  td #{m.bond}
           
     
     if feedbacks.length > 0

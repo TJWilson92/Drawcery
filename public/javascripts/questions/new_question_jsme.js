@@ -14,7 +14,7 @@ function jsmeOnLoad() {
         document.getElementById(field_id).value = formula;
         document.getElementById(field_jme).value = jme;
         document.getElementById(pressed_button).style.background='#3adb76';
-        document.getElementById(pressed_button).innerHTML = 'Success (Presss to Update)'
+        document.getElementById(pressed_button).innerHTML = 'Success (Presss to Update)';
         jsmeApplet.clear();
       }
     }

@@ -3,7 +3,7 @@
 function jsmeOnLoad() {
 
   $(document).ready(function () {
-    answer = interpretStringNodeObject(answer);
+    // answer = interpretStringNodeObject(answer);
     // var editHistory = answer.molecule[0].editHistory;
 
     var problem_molecule = document.getElementById('problem_jme').innerHTML;
