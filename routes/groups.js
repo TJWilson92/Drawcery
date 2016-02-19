@@ -22,10 +22,16 @@ router.get('/show/:id', function (req, res, next) {
               base_host: req.get('host')
             });
           });
-        } else if (group.members.length > 0) {
-          var userIsMember = group.members.some(function (curr, ind, arr) {
-            return curr._id.equals(req.user._id);
-          });
+        } else {
+
+          var isMember = function(user, group){
+            return(group.members.some(function(curr, ind, arr){
+              return curr._id.equals(user._id);
+            }));
+          };
+
+          var userIsMember = isMember(req.user, group) || false ;
+
           if (userIsMember) {
             res.render('Group/show', {
               group: group,
@@ -34,7 +40,10 @@ router.get('/show/:id', function (req, res, next) {
           } else {
             res.render('Group/showNonMember', {
               group: group,
-              user: {_id: req.user._id}
+              user: {
+                _id: req.user._id,
+                title: "Drawcery | Join Group"
+              }
             });
           }
         }
